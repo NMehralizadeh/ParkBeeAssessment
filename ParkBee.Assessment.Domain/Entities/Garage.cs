@@ -12,5 +12,6 @@ namespace ParkBee.Assessment.Domain.Entities
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
         public ICollection<Door> Doors { get; set; }
+        public Owner owner { get; set; }
     }
 }

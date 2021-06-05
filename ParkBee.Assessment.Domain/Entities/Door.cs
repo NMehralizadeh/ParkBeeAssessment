@@ -9,6 +9,6 @@ namespace ParkBee.Assessment.Domain.Entities
         public int GarageId { get; set; }
         public string IP { get; set; }      
         public Garage Garage { get; set; }
-        public ICollection<DoorStatusHistory> DoorStatuses { get; set; }
+        public ICollection<DoorStatusHistory> DoorStatusHistories { get; set; }
     }
 }

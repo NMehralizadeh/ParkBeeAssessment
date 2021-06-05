@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Swagger;
-
+using Microsoft.OpenApi.Models;
 namespace ParkBee.Assessment.API
 {
     public class Startup
@@ -39,7 +39,7 @@ namespace ParkBee.Assessment.API
                 });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "ParkBee.Assessment"
@@ -47,10 +47,10 @@ namespace ParkBee.Assessment.API
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("parkbee"));
 
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext context)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {

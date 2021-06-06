@@ -52,6 +52,7 @@ namespace ParkBee.Assessment.API
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
             services.AddScoped<ILoggedInUserContext, LoggedInUserContext>();
+            services.AddHttpContextAccessor();
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }

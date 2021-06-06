@@ -1,5 +1,6 @@
-using System.Linq;
+﻿using System;
 using System.Text;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using ParkBee.Assessment.API.Services;
-using ParkBee.Assessment.Application.Interfaces;
+using MediatR;
 using ParkBee.Assessment.Persistence;
+using ParkBee.Assessment.API.Services;
+using ParkBee.Assessment.Domain.Entities;
+using ParkBee.Assessment.Application.Interfaces;
+using ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails;
+
 namespace ParkBee.Assessment.API
 {
     public class Startup
@@ -52,6 +57,7 @@ namespace ParkBee.Assessment.API
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
             services.AddScoped<ILoggedInUserContext, LoggedInUserContext>();
+            services.AddMediatR(typeof(GetGarageDetailsQuery).Assembly);
             services.AddHttpContextAccessor();
 
             services.AddMvc(options => options.EnableEndpointRouting = false);

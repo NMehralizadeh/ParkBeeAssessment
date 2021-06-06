@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="card" *ngIf="garageDetailInfo">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ garageDetailInfo.name }} [{{ garageDetailInfo.address }}]
+      </h5>
+      <p class="card-text">
+        Garage has {{ garageDetailInfo.doorCount }} door. Status of doors shown at
+        the below.
+      </p>
+
+      <div class="card" style="width: 18rem">
+        <div class="card-header">
+          Doors
+          <span class="badge bg-success">{{ garageDetailInfo.onlineDoorCount }}</span> Online
+          <span class="badge bg-danger">{{ garageDetailInfo.offlineDoorCount }}</span> Offline
+        </div>
+        <ul
+          class="list-group list-group-flush"
+          *ngFor="let door of garageDetailInfo.doors"
+        >
+          <li class="list-group-item">
+            [{{ door.doorId }}] is
+            <span *ngIf="door.isOnline">Online</span>
+            <span *ngIf="!door.isOnline">Offline</span>
+            [{{ door.name }}]
+          </li>
+        </ul>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="getGarageDetailInfo()"
+    >
+      Refresh Status
+    </button>
+  </div>
+</div>

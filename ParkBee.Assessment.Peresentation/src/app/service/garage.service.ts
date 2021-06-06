@@ -22,4 +22,16 @@ export class GarageService {
       }
     );
   }
+
+  refreshDoorStatus(doorId : number) : Observable<boolean> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${environment.token}`,
+    });
+    return this.http.get<boolean>(
+      `${this.garageControllerUrl}api/Garage/RefreshStatus/${doorId}`,
+      {
+        headers: headers,
+      }
+    );
+  }
 }

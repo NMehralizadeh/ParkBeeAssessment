@@ -5,15 +5,21 @@
         {{ garageDetailInfo.name }} [{{ garageDetailInfo.address }}]
       </h5>
       <p class="card-text">
-        Garage has {{ garageDetailInfo.doorCount }} door. Status of doors shown at
-        the below.
+        Garage has {{ garageDetailInfo.doorCount }} door. Status of doors shown
+        at the below.
       </p>
 
       <div class="card" style="width: 18rem">
         <div class="card-header">
           Doors
-          <span class="badge bg-success">{{ garageDetailInfo.onlineDoorCount }}</span> Online
-          <span class="badge bg-danger">{{ garageDetailInfo.offlineDoorCount }}</span> Offline
+          <span class="badge bg-success">{{
+            garageDetailInfo.onlineDoorCount
+          }}</span>
+          Online
+          <span class="badge bg-danger">{{
+            garageDetailInfo.offlineDoorCount
+          }}</span>
+          Offline
         </div>
         <ul
           class="list-group list-group-flush"
@@ -24,16 +30,16 @@
             <span *ngIf="door.isOnline">Online</span>
             <span *ngIf="!door.isOnline">Offline</span>
             [{{ door.name }}]
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="refreshDoorStatus(door.doorId)"
+            >
+              Refresh Status
+            </button>
           </li>
         </ul>
       </div>
     </div>
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="getGarageDetailInfo()"
-    >
-      Refresh Status
-    </button>
   </div>
 </div>

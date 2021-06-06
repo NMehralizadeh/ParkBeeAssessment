@@ -23,19 +23,33 @@ export class GarageComponent implements OnInit {
   getGarageDetailInfo() {
     this.garageServie.getGarageDetailInfo().subscribe((gs) => {
       this.garageDetailInfo = gs;
-      this.garageDetailInfo.onlineDoorCount =
-        this.garageDetailInfo.doors.filter(
-          (door) => door.isOnline == true
-        ).length;
-      this.garageDetailInfo.offlineDoorCount =
-        this.garageDetailInfo.doors.filter(
-          (door) => door.isOnline == false
-        ).length;
-      this.garageDetailInfo.doorCount =
-        this.garageDetailInfo.onlineDoorCount +
-        this.garageDetailInfo.offlineDoorCount;
-      console.log(this.garageDetailInfo);
+
+      this.computeValues();
     });
     this.messageService.add(`Status of my garage fetched! `);
+  }
+
+  refreshDoorStatus(doorId: number) {
+    this.garageServie.refreshDoorStatus(doorId).subscribe((doorStatus) => {
+      this.garageDetailInfo.doors = this.garageDetailInfo.doors.map((door) => {
+        if (door.doorId == doorId) {
+          door.isOnline = doorStatus;
+        }
+        return door;
+      });
+      this.computeValues();
+    });
+  }
+
+  computeValues() {
+    this.garageDetailInfo.onlineDoorCount = this.garageDetailInfo.doors.filter(
+      (door) => door.isOnline == true
+    ).length;
+    this.garageDetailInfo.offlineDoorCount = this.garageDetailInfo.doors.filter(
+      (door) => door.isOnline == false
+    ).length;
+    this.garageDetailInfo.doorCount =
+      this.garageDetailInfo.onlineDoorCount +
+      this.garageDetailInfo.offlineDoorCount;
   }
 }

@@ -32,11 +32,11 @@ namespace ParkBee.Assessment.Application.Services
 
                 using var scope = _serviceScopeFactory.CreateScope();
                 var dbContext = scope.ServiceProvider.GetService<IApplicationDbContext>();
-                var doorCheckService = scope.ServiceProvider.GetService<IDoorStatusService>();
+                var doorStatusService = scope.ServiceProvider.GetService<IDoorStatusService>();
                 var doors = await dbContext.DoorRepository.GetAllDoors();
                 foreach (var door in doors)
                 {
-                    var isOnline = await doorCheckService.CheckDoorStatus(door);
+                    var isOnline = await doorStatusService.CheckDoorStatus(door);
                     await dbContext.DoorRepository.ChangeDoorStatus(door, isOnline);
                 }
 

@@ -20,4 +20,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ParkBee.Assessment.Application\ParkBee.Assessment.Application.csproj" />
+  </ItemGroup>
+
 </Project>

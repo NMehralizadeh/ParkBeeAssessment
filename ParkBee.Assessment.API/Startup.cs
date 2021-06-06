@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,6 +16,7 @@ using ParkBee.Assessment.API.Services;
 using ParkBee.Assessment.Domain.Entities;
 using ParkBee.Assessment.Application.Interfaces;
 using ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails;
+using ParkBee.Assessment.Application.Services;
 
 namespace ParkBee.Assessment.API
 {
@@ -57,6 +58,9 @@ namespace ParkBee.Assessment.API
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
             services.AddScoped<ILoggedInUserContext, LoggedInUserContext>();
+
+            services.AddScoped<IPingService, PingService>();
+            
             services.AddMediatR(typeof(GetGarageDetailsQuery).Assembly);
             services.AddHttpContextAccessor();
 

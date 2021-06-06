@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ParkBee.Assessment.Application.Garages.Commands;
 using ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails;
 
 namespace ParkBee.Assessment.API.Controllers
@@ -14,6 +15,12 @@ namespace ParkBee.Assessment.API.Controllers
         public async Task<GarageDto> GetGarageDetails()
         {
             return await Mediator.Send(new GetGarageDetailsQuery()).ConfigureAwait(false);
+        }
+
+        [HttpGet("RefreshStatus/{doorId:int}")]
+        public async Task<bool> RefreshDoorStatus(int doorId)
+        {
+            return await Mediator.Send(new RefreshDoorStatusCommand { DoorId = doorId }).ConfigureAwait(false);
         }
     }
 }

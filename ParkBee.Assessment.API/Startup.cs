@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ParkBee.Assessment.API.Services;
 using ParkBee.Assessment.Application.Interfaces;
+using ParkBee.Assessment.Persistence;
 namespace ParkBee.Assessment.API
 {
     public class Startup
@@ -48,6 +49,7 @@ namespace ParkBee.Assessment.API
                 });
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("parkbee"));
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 
             services.AddScoped<ILoggedInUserContext, LoggedInUserContext>();
 

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ParkBee.Assessment.Application\ParkBee.Assessment.Application.csproj" />
+    <ProjectReference Include="..\ParkBee.Assessment.Persistence\ParkBee.Assessment.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

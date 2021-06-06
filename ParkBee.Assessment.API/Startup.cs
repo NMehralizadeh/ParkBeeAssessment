@@ -63,13 +63,89 @@ namespace ParkBee.Assessment.API
                 app.UseDeveloperExceptionPage();
             }
 
-            context.Garages.AddRange(Enumerable.Range(1, 3).Select(s => new Garage { Name = $"Garage {s}" }));
-            context.SaveChanges();
+            Seed(context);
 
             app.UseAuthentication();
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ParkBee.Assessment API V1"));
+        }
+
+
+        private void Seed(ApplicationDbContext context)
+        {
+            context.Garages.AddRange(new List<Garage>
+            {
+                new()
+                {
+                    Id = 1,
+                    Name = "Tehran",
+                    Address = "Airport"
+                },
+                new()
+                {
+                    Id = 2,
+                    Name = "Maragheh",
+                    Address = "Bus Station"
+                },
+            });
+            context.Doors.AddRange(new List<Door>
+            {
+                new()
+                {
+                    Id = 1,
+                    GarageId = 1,
+                    Name = "Main Door",
+                    IP = "127.0.0.1"
+                },
+                new()
+                {
+                    Id = 2,
+                    GarageId = 2,
+                    Name = "First Door",
+                    IP = "4.2.2.4"
+                },
+                new()
+                {
+                    Id = 3,
+                    GarageId = 2,
+                    Name = "Second Door",
+                    IP = "192.168.255.255"
+                }
+            });
+            context.DoorStatusHistories.AddRange(
+            new List<DoorStatusHistory>
+            {
+                new()
+                {
+                    Id = 1,
+                    DoorId = 1,
+                    IsOnline = true,
+                    ChangeDate = DateTimeOffset.Now.AddHours(-2),
+                },
+                new()
+                {
+                    Id = 2,
+                    DoorId = 2,
+                    IsOnline = false,
+                    ChangeDate = DateTimeOffset.Now.AddMinutes(-30),
+                },
+                new()
+                {
+                    Id = 3,
+                    DoorId = 2,
+                    IsOnline = true,
+                    ChangeDate = DateTimeOffset.Now.AddHours(-6),
+                },
+                new()
+                {
+                    Id = 4,
+                    DoorId = 3,
+                    IsOnline = true,
+                    ChangeDate = DateTimeOffset.Now.AddDays(-1),
+                },
+            });
+            context.SaveChanges();
         }
     }
 }

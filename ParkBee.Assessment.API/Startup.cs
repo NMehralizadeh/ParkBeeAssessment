@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using ParkBee.Assessment.API.Services;
+using ParkBee.Assessment.Application.Interfaces;
 namespace ParkBee.Assessment.API
 {
     public class Startup
@@ -46,6 +48,8 @@ namespace ParkBee.Assessment.API
                 });
             });
             services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("parkbee"));
+
+            services.AddScoped<ILoggedInUserContext, LoggedInUserContext>();
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }

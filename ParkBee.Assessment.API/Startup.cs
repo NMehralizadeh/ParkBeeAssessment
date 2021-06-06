@@ -60,6 +60,13 @@ namespace ParkBee.Assessment.API
             services.AddMediatR(typeof(GetGarageDetailsQuery).Assembly);
             services.AddHttpContextAccessor();
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }
 
@@ -68,6 +75,7 @@ namespace ParkBee.Assessment.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("MyPolicy");
             }
 
             Seed(context);

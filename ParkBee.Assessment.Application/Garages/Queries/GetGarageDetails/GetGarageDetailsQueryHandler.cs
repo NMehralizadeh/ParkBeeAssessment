@@ -23,7 +23,7 @@ namespace ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails
         public async Task<GarageDto> Handle(GetGarageDetailsQuery request, CancellationToken cancellationToken)
         {
             var garage = await _dbContext.Garages.Include(g => g.Doors)
-                .ThenInclude(d => d.DoorStatusHistories)
+                .ThenInclude(d => d.DoorStatusHistories.OrderByDescending(p => p.ChangeDate).Take(1))
                 .FirstOrDefaultAsync(g => g.Id == _loggedInUserContext.GarageId, cancellationToken: cancellationToken);
             if (garage == null)
                 throw new System.Exception($"Garage with Id {_loggedInUserContext.GarageId} not found");
@@ -36,12 +36,11 @@ namespace ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails
             var doors = new List<DoorDto>();
             garage.Doors.ToList().ForEach(door =>
             {
-                var dsh = door.DoorStatusHistories.OrderByDescending(dsh => dsh.ChangeDate).First();
                 doors.Add(new DoorDto
                 {
                     DoorId = door.Id,
                     Name = door.Name,
-                    IsOnline = dsh.IsOnline
+                    IsOnline = door.DoorStatusHistories.First().IsOnline
                 });
             });
 

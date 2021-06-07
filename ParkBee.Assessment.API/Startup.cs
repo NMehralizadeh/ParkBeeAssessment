@@ -17,6 +17,7 @@ using ParkBee.Assessment.Domain.Entities;
 using ParkBee.Assessment.Application.Interfaces;
 using ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails;
 using ParkBee.Assessment.Application.Services;
+using ParkBee.Assessment.Application.Mappings;
 
 namespace ParkBee.Assessment.API
 {
@@ -54,6 +55,9 @@ namespace ParkBee.Assessment.API
                     Title = "ParkBee.Assessment"
                 });
             });
+
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+
             services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("parkbee"));
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 

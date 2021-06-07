@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ParkBee.Assessment.Application.Exceptions;
 using ParkBee.Assessment.Application.Interfaces;
-using ParkBee.Assessment.Domain.Entities;
 
 namespace ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails
 {
@@ -14,11 +13,13 @@ namespace ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ILoggedInUserContext _loggedInUserContext;
+        private readonly IMapper _mapper;
 
-        public GetGarageDetailsQueryHandler(IApplicationDbContext dbContext, ILoggedInUserContext loggedInUserContext)
+        public GetGarageDetailsQueryHandler(IApplicationDbContext dbContext, ILoggedInUserContext loggedInUserContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _loggedInUserContext = loggedInUserContext;
+            _mapper = mapper;
         }
 
         public async Task<GarageDto> Handle(GetGarageDetailsQuery request, CancellationToken cancellationToken)
@@ -28,30 +29,8 @@ namespace ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails
                 .FirstOrDefaultAsync(g => g.Id == _loggedInUserContext.GarageId, cancellationToken: cancellationToken);
             if (garage == null)
                 throw new NotFoundException($"Garage with Id {_loggedInUserContext.GarageId} not found");
-
-            return MapGaragetoDto(garage);
-        }
-
-        private GarageDto MapGaragetoDto(Garage garage)
-        {
-            var doors = new List<DoorDto>();
-            garage.Doors.ToList().ForEach(door =>
-            {
-                doors.Add(new DoorDto
-                {
-                    DoorId = door.Id,
-                    Name = door.Name,
-                    IsOnline = door.DoorStatusHistories.First().IsOnline
-                });
-            });
-
-            return new GarageDto
-            {
-                GarageId = garage.Id,
-                Name = garage.Name,
-                Address = garage.Address,
-                Doors = doors
-            };
+            
+            return _mapper.Map<GarageDto>(garage);
         }
     }
 }

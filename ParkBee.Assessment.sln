@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkBee.Assessment.Domain",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkBee.Assessment.Persistence", "ParkBee.Assessment.Persistence\ParkBee.Assessment.Persistence.csproj", "{F2F35175-4ADF-4462-A92A-0B628B2B1A91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParkBee.Assessment.Application.UnitTests", "ParkBee.Assessment.Application.UnitTests\ParkBee.Assessment.Application.UnitTests.csproj", "{91C06EA0-2661-4D98-9338-C2330E30E8A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F2F35175-4ADF-4462-A92A-0B628B2B1A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2F35175-4ADF-4462-A92A-0B628B2B1A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2F35175-4ADF-4462-A92A-0B628B2B1A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C06EA0-2661-4D98-9338-C2330E30E8A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C06EA0-2661-4D98-9338-C2330E30E8A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C06EA0-2661-4D98-9338-C2330E30E8A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C06EA0-2661-4D98-9338-C2330E30E8A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using ParkBee.Assessment.Application.Exceptions;
 using ParkBee.Assessment.Application.Interfaces;
 using ParkBee.Assessment.Domain.Entities;
 
@@ -26,7 +27,7 @@ namespace ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails
                 .ThenInclude(d => d.DoorStatusHistories.OrderByDescending(p => p.ChangeDate).Take(1))
                 .FirstOrDefaultAsync(g => g.Id == _loggedInUserContext.GarageId, cancellationToken: cancellationToken);
             if (garage == null)
-                throw new System.Exception($"Garage with Id {_loggedInUserContext.GarageId} not found");
+                throw new NotFoundException($"Garage with Id {_loggedInUserContext.GarageId} not found");
 
             return MapGaragetoDto(garage);
         }

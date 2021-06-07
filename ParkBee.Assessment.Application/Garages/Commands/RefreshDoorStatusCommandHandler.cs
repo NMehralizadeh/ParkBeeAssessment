@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using ParkBee.Assessment.Application.Exceptions;
 using ParkBee.Assessment.Application.Interfaces;
 
 namespace ParkBee.Assessment.Application.Garages.Commands
@@ -23,7 +24,7 @@ namespace ParkBee.Assessment.Application.Garages.Commands
         {
             var door = await _dbContext.DoorRepository.GetDoorWithLatestStatus(request.DoorId, _loggedInUserContext.GarageId);
             if (door == null)
-                throw new Exception($"Door Id={request.DoorId} not found");
+                throw new NotFoundException($"Door Id={request.DoorId} not found");
 
             var isOnline = await _doorStatusService.CheckDoorStatus(door);
             await _dbContext.DoorRepository.ChangeDoorStatus(door, isOnline);

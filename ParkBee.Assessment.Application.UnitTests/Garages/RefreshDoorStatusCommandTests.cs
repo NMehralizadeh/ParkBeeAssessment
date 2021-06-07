@@ -1,4 +1,4 @@
-using Moq;
+﻿using Moq;
 using Xunit;
 using System;
 using System.Threading;
@@ -8,6 +8,7 @@ using ParkBee.Assessment.Domain.Entities;
 using ParkBee.Assessment.Application.Interfaces;
 using ParkBee.Assessment.Application.Garages.Commands;
 using ParkBee.Assessment.Application.UnitTests.Common;
+using ParkBee.Assessment.Application.Exceptions;
 
 namespace ParkBee.Assessment.Application.UnitTests.Garages
 {
@@ -47,6 +48,7 @@ namespace ParkBee.Assessment.Application.UnitTests.Garages
             _doorStatusServiceMock.Setup(cs => cs.CheckDoorStatus(It.Is<Door>(d => d.Id == 3))).ReturnsAsync(true);
             var sut = new RefreshDoorStatusCommandHandler(_dbContext, _doorStatusServiceMock.Object, _loggedInUserContextMock.Object);
 
+            await Assert.ThrowsAsync<NotFoundException>(()=>sut.Handle(new RefreshDoorStatusCommand { DoorId = 1 }, CancellationToken.None));
 
             Assert.False(await sut.Handle(new RefreshDoorStatusCommand { DoorId = 2 }, CancellationToken.None));
             Assert.True(await sut.Handle(new RefreshDoorStatusCommand { DoorId = 3 }, CancellationToken.None));

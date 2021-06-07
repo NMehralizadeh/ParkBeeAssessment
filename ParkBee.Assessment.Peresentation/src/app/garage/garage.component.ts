@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GarageService } from '../service/garage.service';
+import { LoginService } from '../service/login.service';
 import { MessageService } from '../service/message.service';
 import { GarageDetailInfo } from '../viewModels/GarageDetailInfo';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-garage',
@@ -11,13 +13,17 @@ import { GarageDetailInfo } from '../viewModels/GarageDetailInfo';
 export class GarageComponent implements OnInit {
   constructor(
     private garageServie: GarageService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private loginService: LoginService
   ) {}
 
   garageDetailInfo: GarageDetailInfo;
 
   ngOnInit(): void {
-    this.getGarageDetailInfo();
+    this.loginService.login('admin', 'admin').subscribe((r) => {
+      environment.token = r['token'];
+      this.getGarageDetailInfo();
+    });
   }
 
   getGarageDetailInfo() {

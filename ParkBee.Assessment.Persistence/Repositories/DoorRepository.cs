@@ -20,7 +20,9 @@ namespace ParkBee.Assessment.Persistence.Repositories
 
         public async Task<IReadOnlyList<Door>> GetAllDoors()
         {
-            return await _dbContext.Doors.ToListAsync();
+            return await _dbContext.Doors
+                            .Include(d=>d.DoorStatusHistories.OrderByDescending(dsh=>dsh.ChangeDate))
+                            .ToListAsync();
         }
 
         public async Task<Door> GetDoorWithLatestStatus(int doorId, int garageId)

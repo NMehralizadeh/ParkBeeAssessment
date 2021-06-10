@@ -87,8 +87,8 @@ namespace ParkBee.Assessment.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseCors("MyPolicy");
             }
+            app.UseCors("MyPolicy");
 
             Seed(context);
 

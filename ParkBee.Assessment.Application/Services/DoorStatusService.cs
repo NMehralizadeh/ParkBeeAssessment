@@ -33,7 +33,7 @@ namespace ParkBee.Assessment.Application.Services
             if (!IPAddress.TryParse(door.IP, out var ipAddress))
                 throw new ArgumentException("IP address of door is not valid");
 
-            return await _pingService.Send(ipAddress,_retryCount,_interval);
+            return await _pingService.HasPing(ipAddress,_retryCount,_interval);
         }
 
     }

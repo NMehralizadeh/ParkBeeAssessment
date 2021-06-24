@@ -21,8 +21,8 @@ namespace ParkBee.Assessment.Application.UnitTests.Services
         {
             _configurationMock.SetupGet(x => x[It.Is<string>(s=>s == "PingRetry:Count")]).Returns("2");
 
-            _pingServiceMock.Setup(x => x.Send(IPAddress.Parse(OfflineIpAddress),2,TimeSpan.FromSeconds(2))).ReturnsAsync(false);
-            _pingServiceMock.Setup(x => x.Send(IPAddress.Parse(OnlineIpAddress),2,TimeSpan.FromSeconds(2))).ReturnsAsync(true);
+            _pingServiceMock.Setup(x => x.HasPing(IPAddress.Parse(OfflineIpAddress),2,TimeSpan.FromSeconds(2))).ReturnsAsync(false);
+            _pingServiceMock.Setup(x => x.HasPing(IPAddress.Parse(OnlineIpAddress),2,TimeSpan.FromSeconds(2))).ReturnsAsync(true);
             _doorStatusService = new DoorStatusService(_pingServiceMock.Object, _configurationMock.Object);
         }
 

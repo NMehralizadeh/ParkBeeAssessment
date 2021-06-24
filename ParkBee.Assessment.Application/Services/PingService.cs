@@ -17,14 +17,14 @@ namespace ParkBee.Assessment.Application.Services
 
         }
 
-        public async Task<bool> Send(IPAddress ip, int retryCount, TimeSpan interval)
+        public async Task<bool> HasPing(IPAddress ip, int retryCount, TimeSpan interval)
         {
             var exceptions = new List<Exception>();
             for (int attempted = 0; attempted < retryCount; attempted++)
             {
                 try
                 {
-                    bool successful = await Send(ip);
+                    bool successful = await HasPing(ip);
                     if (successful)
                         return successful;
 
@@ -43,7 +43,7 @@ namespace ParkBee.Assessment.Application.Services
             return false;
         }
 
-        public async Task<bool> Send(IPAddress ip)
+        public async Task<bool> HasPing(IPAddress ip)
         {
             PingReply reply = await _pingSender.SendPingAsync(ip);
             return (reply.Status == IPStatus.Success);

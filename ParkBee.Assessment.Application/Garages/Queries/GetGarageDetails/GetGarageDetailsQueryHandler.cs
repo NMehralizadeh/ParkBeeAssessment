@@ -1,35 +1,32 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ParkBee.Assessment.Application.Exceptions;
-using ParkBee.Assessment.Application.Interfaces;
+using ParkBee.Assessment.Application.Interfaces.Repositories;
 
 namespace ParkBee.Assessment.Application.Garages.Queries.GetGarageDetails
 {
     public class GetGarageDetailsQueryHandler : IRequestHandler<GetGarageDetailsQuery, GarageDto>
     {
-        private readonly IApplicationDbContext _dbContext;
-        private readonly ILoggedInUserContext _loggedInUserContext;
+        private readonly IGarageRepository _garageRepository;
         private readonly IMapper _mapper;
 
-        public GetGarageDetailsQueryHandler(IApplicationDbContext dbContext, ILoggedInUserContext loggedInUserContext, IMapper mapper)
+        public GetGarageDetailsQueryHandler(
+            IGarageRepository garageRepository,
+            IMapper mapper
+            )
         {
-            _dbContext = dbContext;
-            _loggedInUserContext = loggedInUserContext;
+            _garageRepository = garageRepository;
             _mapper = mapper;
         }
 
         public async Task<GarageDto> Handle(GetGarageDetailsQuery request, CancellationToken cancellationToken)
         {
-            var garage = await _dbContext.Garages.Include(g => g.Doors)
-                .ThenInclude(d => d.DoorStatusHistories.OrderByDescending(p => p.ChangeDate).Take(1))
-                .FirstOrDefaultAsync(g => g.Id == _loggedInUserContext.GarageId, cancellationToken: cancellationToken);
+            var garage = await _garageRepository.GetGarageDetail(request.GarageId);
             if (garage == null)
-                throw new NotFoundException($"Garage with Id {_loggedInUserContext.GarageId} not found");
-            
+                throw new NotFoundException($"Garage with Id {request.GarageId} not found");
+
             return _mapper.Map<GarageDto>(garage);
         }
     }

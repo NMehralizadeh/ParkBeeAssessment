@@ -8,7 +8,6 @@ namespace ParkBee.Assessment.Application.Interfaces
 {
     public partial interface IApplicationDbContext
     {
-        DbSet<Owner> Owners { get; set; }
         DbSet<Door> Doors { get; set; }
         DbSet<DoorStatusHistory> DoorStatusHistories { get; set; }
         DbSet<Garage> Garages { get; set; }

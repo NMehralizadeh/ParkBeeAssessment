@@ -10,8 +10,6 @@ namespace ParkBee.Assessment.Persistence
         {
         }
 
-
-        public DbSet<Owner> Owners { get; set; }
         public DbSet<Garage> Garages { get; set; }
         public DbSet<Door> Doors { get; set; }
         public DbSet<DoorStatusHistory> DoorStatusHistories { get; set; }

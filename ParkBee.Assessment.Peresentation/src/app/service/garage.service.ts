@@ -23,12 +23,13 @@ export class GarageService {
     );
   }
 
-  refreshDoorStatus(doorId : number) : Observable<boolean> {
+  refreshDoorStatus(doorId: number): Observable<boolean> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${environment.token}`,
     });
-    return this.http.get<boolean>(
+    return this.http.post<boolean>(
       `${this.garageControllerUrl}api/Garage/RefreshStatus/${doorId}`,
+      {},
       {
         headers: headers,
       }
